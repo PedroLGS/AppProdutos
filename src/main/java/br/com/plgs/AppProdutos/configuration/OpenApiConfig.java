@@ -25,7 +25,7 @@ public class OpenApiConfig {
 				.info(
 						new Info()
 							.title("App de cadastro de produtos e estoque")
-							.description("Este app faz controle de cadastro de produtos" +
+							.description("Este app faz controle de cadastro de produtos" + 
 							             " bem como o cadastro e controle de estoque.")
 							.contact(new Contact()
 										.name("MEU NOME")

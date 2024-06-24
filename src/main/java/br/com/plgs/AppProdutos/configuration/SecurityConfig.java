@@ -14,7 +14,7 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		//System.out.println(">>> Passou pelo filtro do request");
+		//System.out.println(">>> Passou pelo filtro de request");
 		http
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -24,12 +24,13 @@ public class SecurityConfig {
 							"/token",
 							"/v3/api-docs/**",
 							"/swagger-ui/**",
-							"/swagger-ui.html", 
-							"/swagger-resources/**", 
+							"/swagger-ui.html",
+							"/swagger-resources/**",
 							"/webjars/**"
 							).permitAll().anyRequest().authenticated()
 					)
-			.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+			.addFilterBefore(jwtTokenFilter(), 
+					UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 	
@@ -37,4 +38,5 @@ public class SecurityConfig {
 	public JwtTokenFilter jwtTokenFilter() {
 		return new JwtTokenFilter();
 	}
+	
 }

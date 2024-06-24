@@ -23,22 +23,24 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// Extrair o token do cabeçalho da requisição
+		//Extrair o token do cabeçalho da requisição
 		String token = request.getHeader("Authorization");
 		if(token != null && token.startsWith("Bearer ")) {
 			token = token.substring(7);
-			// validar o token
+			//validar o token
 			if(jwtTokenUtil.validateToken(token)) {
-				// se valido, configurar a autenticação no contexto da aplicação
+				//se válido, configurar a autenticação no contexto da aplicação
 				String username = jwtTokenUtil.getUsernameFromToken(token);
 				
-				// criar uma lista de autenticação
-				List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("USER"));
+				//criar uma lista de autenticação
+				List<SimpleGrantedAuthority> authorities = 
+						List.of(new SimpleGrantedAuthority("USER"));
 				
 				Authentication authentication = new
 						UsernamePasswordAuthenticationToken(username, null, authorities);
 				
 				SecurityContextHolder.getContext().setAuthentication(authentication);
+				
 			}
 		}
 		filterChain.doFilter(request, response);
